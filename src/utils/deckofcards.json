@@ -1,0 +1,418 @@
+[
+  {
+    "code": "6D",
+    "image": "/images/Cards/DIAMOND-6.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "6",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "2S",
+    "image": "/images/Cards/SPADE-2.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "2",
+    "suit": "SPADES",
+    "action": "DrawTwo"
+  },
+  {
+    "code": "KD",
+    "image": "/images/Cards/DIAMOND-13-KING.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "KING",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "9S",
+    "image": "/images/Cards/SPADE-9.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "9",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "7H",
+    "image": "/images/Cards/HEART-7.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "7",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "6C",
+    "image": "/images/Cards/CLUB-6.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "6",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "QH",
+    "image": "/images/Cards/HEART-12-QUEEN.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "QUEEN",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "8H",
+    "image": "/images/Cards/HEART-8.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "8",
+    "suit": "HEARTS",
+    "action": "ChangeSuit"
+  },
+  {
+    "code": "AC",
+    "image": "/images/Cards/CLUB-1-ACE.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "ACE",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "3D",
+    "image": "/images/Cards/DIAMOND-3.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "3",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "5S",
+    "image": "/images/Cards/SPADE-5.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "5",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "AH",
+    "image": "/images/Cards/HEART-1-ACE.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "ACE",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "6S",
+    "image": "/images/Cards/SPADE-6.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "6",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "8S",
+    "image": "/images/Cards/SPADE-8.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "8",
+    "suit": "SPADES",
+    "action": "ChangeSuit"
+  },
+  {
+    "code": "4S",
+    "image": "/images/Cards/SPADE-4.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "4",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "0S",
+    "image": "/images/Cards/SPADE-10.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "10",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "3C",
+    "image": "/images/Cards/CLUB-3.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "3",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "AS",
+    "image": "/images/Cards/SPADE-1-ACE.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "ACE",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "6H",
+    "image": "/images/Cards/HEART-6.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "6",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "4H",
+    "image": "/images/Cards/HEART-4.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "4",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "7S",
+    "image": "/images/Cards/SPADE-7.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "7",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "0H",
+    "image": "/images/Cards/HEART-10.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "10",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "QS",
+    "image": "/images/Cards/SPADE-12-QUEEN.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "QUEEN",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "7D",
+    "image": "/images/Cards/DIAMOND-7.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "7",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "JC",
+    "image": "/images/Cards/CLUB-11-JACK.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "JACK",
+    "suit": "CLUBS",
+    "action": "Skip"
+  },
+  {
+    "code": "4D",
+    "image": "/images/Cards/DIAMOND-4.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "4",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "QC",
+    "image": "/images/Cards/CLUB-12-QUEEN.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "QUEEN",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "JS",
+    "image": "/images/Cards/SPADE-11-JACK.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "JACK",
+    "suit": "SPADES",
+    "action": "Skip"
+  },
+  {
+    "code": "8D",
+    "image": "/images/Cards/DIAMOND-8.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "8",
+    "suit": "DIAMONDS",
+    "action": "ChangeSuit"
+  },
+  {
+    "code": "QD",
+    "image": "/images/Cards/DIAMOND-12-QUEEN.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "QUEEN",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "5H",
+    "image": "/images/Cards/HEART-5.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "5",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "0D",
+    "image": "/images/Cards/DIAMOND-10.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "10",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "JH",
+    "image": "/images/Cards/HEART-11-JACK.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "JACK",
+    "suit": "HEARTS",
+    "action": "Skip"
+  },
+  {
+    "code": "8C",
+    "image": "/images/Cards/CLUB-8.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "8",
+    "suit": "CLUBS",
+    "action": "ChangeSuit"
+  },
+  {
+    "code": "JD",
+    "image": "/images/Cards/DIAMOND-11-JACK.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "JACK",
+    "suit": "DIAMONDS",
+    "action": "Skip"
+  },
+  {
+    "code": "4C",
+    "image": "/images/Cards/CLUB-4.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "4",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "AD",
+    "image": "/images/Cards/DIAMOND-1-ACE.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "ACE",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "2H",
+    "image": "/images/Cards/HEART-2.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "2",
+    "suit": "HEARTS",
+    "action": "DrawTwo"
+  },
+  {
+    "code": "7C",
+    "image": "/images/Cards/CLUB-7.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "7",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "9D",
+    "image": "/images/Cards/DIAMOND-9.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "9",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "KS",
+    "image": "/images/Cards/SPADE-13-KING.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "KING",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "0C",
+    "image": "/images/Cards/CLUB-10.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "10",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "9H",
+    "image": "/images/Cards/HEART-9.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "9",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "3S",
+    "image": "/images/Cards/SPADE-3.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "3",
+    "suit": "SPADES",
+    "action": "None"
+  },
+  {
+    "code": "2D",
+    "image": "/images/Cards/DIAMOND-2.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "2",
+    "suit": "DIAMONDS",
+    "action": "DrawTwo"
+  },
+  {
+    "code": "3H",
+    "image": "/images/Cards/HEART-3.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "3",
+    "suit": "HEARTS",
+    "action": "None"
+  },
+  {
+    "code": "5D",
+    "image": "/images/Cards/DIAMOND-5.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "5",
+    "suit": "DIAMONDS",
+    "action": "None"
+  },
+  {
+    "code": "2C",
+    "image": "/images/Cards/CLUB-2.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "2",
+    "suit": "CLUBS",
+    "action": "DrawTwo"
+  },
+  {
+    "code": "5C",
+    "image": "/images/Cards/CLUB-5.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "5",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "KC",
+    "image": "/images/Cards/CLUB-13-KING.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "KING",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "9C",
+    "image": "/images/Cards/CLUB-9.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "9",
+    "suit": "CLUBS",
+    "action": "None"
+  },
+  {
+    "code": "KH",
+    "image": "/images/Cards/HEART-13-KING.svg",
+    "backImage": "/images/Cards/card back black.png",
+    "value": "KING",
+    "suit": "HEARTS",
+    "action": "None"
+  }
+]
