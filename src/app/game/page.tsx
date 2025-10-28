@@ -12,7 +12,6 @@ import DiscardPile from '@/components/DiscardedPile/DiscardPile';
 
 export default function Game() {
     const jsonCards = cards as Omit<Card, 'action'>[];
-    // const [deck, setDeck] = useState([]);
     const [deck, setDeck] = useState(() => new Deck(jsonCards))
     const [players, setPlayers] = useState<Player[]>([]);
     const [discardPile, setDiscardPile] = useState<Card[]>([]);
@@ -41,8 +40,17 @@ export default function Game() {
         }
 
         setPlayers([player, bot]);
-        console.log(`Print player:` ,players)
     }, [])
+
+    useEffect(() => {
+        if (cardsDealt && players.length > 0 && players[turnIndex]?.isBot == true) {
+            const botTimeout = setTimeout(() => {
+                compPlay()
+            }, 1000);
+
+            return () => clearTimeout(botTimeout);
+        }
+    }, [turnIndex, cardsDealt, players]);
 
 
     function deal() {
@@ -50,7 +58,7 @@ export default function Game() {
 
         const updatedPlayers = players.map(player => ({
             ...player,
-            cards: deck.takeCards(8)
+            cards: deck.takeCards(5)
         }))
 
         const topCard = deck.takeCard();
@@ -80,48 +88,58 @@ export default function Game() {
                 selected.value === "8"
             ) {
                 let cardRemoved = false;
-                const currentPlayer = players[0];
-                // const updatedHand = currentPlayer.cards.filter((card) => card.suit === selected.suit
-                // && card.value === selected.value 
+
+                const currentPlayer = players[0]; 
+
                 const newHand = currentPlayer.cards.filter((card) => {
-                        // Remove only the first instance of the exact card
+                    
                         if (!cardRemoved && card.suit === selected.suit && card.value === selected.value) {
                             cardRemoved = true;
                             return false; // Exclude this card
                         }
                         return true; // Keep all other cards
-                    });
-                //)
-                
-            // setPlayers((prevPlayers) => {
-            //     const newPlayers = [...prevPlayers];
-            //     newPlayers[0] = {
-            //         ...currentPlayer,
-            //         cards: newHand
-            //     }
-            // })
+                });
+
             const updatedPlayers = players.map((player, index) => 
                 index === turnIndex
                     ? { ...player, cards: newHand }
                     : player
             )
+
             setPlayers(updatedPlayers);
             setDiscardPile((discardPile) => [...discardPile, selected]);
+
+            if (selected.value === topCard.value) {
+                setSuit(selected.suit)
+            } else if (selected.value === "8") {
+                const suitCount: Record<string, number> = {};
+
+                for (let card of newHand) {
+                    suitCount[card.suit] = (suitCount[card.suit] || 0) + 1;
+                }
+
+                let maxCount = 0;
+                let chosenSuit: Card['suit'] | null = null;
+
+                for (let [cardSuit, count] of Object.entries(suitCount)) {
+                    if (count > maxCount) {
+                        maxCount = count;
+                        chosenSuit = cardSuit as Card['suit'];
+                    }
+                }
+                setSuit(chosenSuit || selected.suit);
+            } else {
+                setSuit(selected.suit)
+            }
+            }
+
             advanceTurn()
         } else {
-            const drawnCard = deck.takeCard();
-            if (drawnCard) {
-                const updatedPlayers = players.map((player, index) => 
-                    index === turnIndex 
-                        ? { ...player, cards: [...player.cards, drawnCard] }
-                        : player
-                );
-                setPlayers(updatedPlayers)
-            }
+            draw()
             advanceTurn()
         }
-        }
     }
+    
 
     function compPlay() {
         const topCard = discardPile[discardPile.length - 1];
@@ -173,15 +191,7 @@ export default function Game() {
             }
             advanceTurn()
         } else {
-            const drawnCard = deck.takeCard();
-            if (drawnCard) {
-                const updatedPlayers = players.map((player, index) => 
-                    index === turnIndex 
-                        ? { ...player, cards: [...player.cards, drawnCard] }
-                        : player
-                );
-                setPlayers(updatedPlayers)
-            }
+            draw()
             advanceTurn()
         }
     }
@@ -206,19 +216,16 @@ export default function Game() {
                         <div>
                             <BotHand cards={players[1]?.cards || []} />
                         </div>
-                        <div className='flex flex-row gap-4 mt-5'>
-                            <DrawingDeck deck={deck.cards} />
+                        <div className='flex mt-3'>
+                            {suit}
+                        </div>
+                        <div className='flex flex-row gap-4 mt-5 justify-center'>
+                            <DrawingDeck onCardClick={draw} deck={deck.cards} />
                             <DiscardPile cards={discardPile} />
                         </div>
                         <div>
-                            <PlayerHand cards={players[0]?.cards || []} />
+                            <PlayerHand onCardClick={playCard} cards={players[0]?.cards || []} />
                         </div>
-                        <button
-                            className='mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500'
-                            onClick={draw}
-                        >
-                            Draw Card
-                        </button>
                     </div>
                 ) : (
                     // Show before dealing

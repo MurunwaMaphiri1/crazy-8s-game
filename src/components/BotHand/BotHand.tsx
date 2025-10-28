@@ -1,7 +1,9 @@
 import Card from "../Card/Card"
+import type { Card as CardType } from "@/utils/interface"
 
 type BotHandProps = {
-    cards: { code: string, value: string }[]
+    // cards: { code: string, value: string }[]
+    cards: CardType[];
 }
 
 export default function BotHand({ cards }: BotHandProps) {
