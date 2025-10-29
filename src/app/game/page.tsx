@@ -9,10 +9,11 @@ import PlayerHand from '@/components/PlayerHand/PlayerHand';
 import BotHand from '@/components/BotHand/BotHand';
 import DrawingDeck from '@/components/DrawingDeck/DrawingDeck';
 import DiscardPile from '@/components/DiscardedPile/DiscardPile';
+import next from 'next'
 
 export default function Game() {
-    const jsonCards = cards as Omit<Card, 'action'>[];
-    const [deck, setDeck] = useState(() => new Deck(jsonCards))
+    const jsonCards = cards as Card[];
+    const [deck, setDeck] = useState(() => new Deck(jsonCards));
     const [players, setPlayers] = useState<Player[]>([]);
     const [discardPile, setDiscardPile] = useState<Card[]>([]);
     const [turnIndex, setTurnIndex] = useState(0);
@@ -51,6 +52,14 @@ export default function Game() {
             return () => clearTimeout(botTimeout);
         }
     }, [turnIndex, cardsDealt, players]);
+
+    useEffect(() => {
+        if (deck.cards.length == 0) {
+            deck.reset(jsonCards);
+            deck.shuffle()
+            setDeck(deck)
+        }
+    },[deck])
 
 
     function deal() {
@@ -111,32 +120,21 @@ export default function Game() {
 
             if (selected.value === topCard.value) {
                 setSuit(selected.suit)
+            }
+
+            if (selected.value === "JACK" || selected.value === "2") {
+                handleCardEffect(selected)
             } else if (selected.value === "8") {
-                const suitCount: Record<string, number> = {};
-
-                for (let card of newHand) {
-                    suitCount[card.suit] = (suitCount[card.suit] || 0) + 1;
-                }
-
-                let maxCount = 0;
-                let chosenSuit: Card['suit'] | null = null;
-
-                for (let [cardSuit, count] of Object.entries(suitCount)) {
-                    if (count > maxCount) {
-                        maxCount = count;
-                        chosenSuit = cardSuit as Card['suit'];
-                    }
-                }
-                setSuit(chosenSuit || selected.suit);
+                handleCardEffect(selected)
+                advanceTurn()
             } else {
-                setSuit(selected.suit)
-            }
+                advanceTurn()
             }
 
-            advanceTurn()
+            }
+            
         } else {
             draw()
-            advanceTurn()
         }
     }
     
@@ -169,30 +167,21 @@ export default function Game() {
             setPlayers(updatedPlayers);
             setDiscardPile([...discardPile, selected]);
 
-            if (selected.value === "8") {
-                const suitCount: Record<string, number> = {};
-
-                for (let card of updatedHand) {
-                    suitCount[card.suit] = (suitCount[card.suit] || 0) + 1;
-                }
-
-                let maxCount = 0;
-                let chosenSuit: Card['suit'] | null = null;
-
-                for (let [cardSuit, count] of Object.entries(suitCount)) {
-                    if (count > maxCount) {
-                        maxCount = count;
-                        chosenSuit = cardSuit as Card['suit'];
-                    }
-                }
-                setSuit(chosenSuit || selected.suit);
-            } else {
+            if (selected.value === topCard.value) {
                 setSuit(selected.suit)
             }
-            advanceTurn()
+
+            if (selected.value === "JACK" || selected.value === "2") {
+                handleCardEffect(selected)
+            } else if (selected.value === "8") {
+                handleCardEffect(selected)
+                advanceTurn()
+            } else {
+                advanceTurn()
+            }
+
         } else {
             draw()
-            advanceTurn()
         }
     }
 
@@ -207,6 +196,55 @@ export default function Game() {
                 setPlayers(updatedPlayers)
             }
             advanceTurn()
+    }
+
+    function handleCardEffect(selected: Card) {
+        switch (selected.value) {
+            case "2":
+                draw2();
+                break;
+            case "JACK":
+                jumpPlayer()
+                break;
+            case "8":
+                const suitCount: Record<string, number> = {};
+
+                for (let card of players[turnIndex].cards) {
+                    suitCount[card.suit] = (suitCount[card.suit] || 0) + 1;
+                }
+
+                let maxCount = 0;
+                let chosenSuit: Card['suit'] | null = null;
+
+                for (let [cardSuit, count] of Object.entries(suitCount)) {
+                    if (count > maxCount) {
+                        maxCount = count;
+                        chosenSuit = cardSuit as Card['suit'];
+                    }
+                }
+                setSuit(chosenSuit || selected.suit);
+                break;
+            default:
+                break;
+        }
+    }
+
+    function jumpPlayer() {
+        setTurnIndex((turnIndex + 2) % players.length)
+    }
+
+
+    function draw2() {
+        setPlayers(prevPlayers => {
+            const drawnCards: Card[] = deck.takeCards(2);
+            const nextPlayerIndex = (turnIndex + 1) % prevPlayers.length;
+            return prevPlayers.map((player, index) => 
+                index === nextPlayerIndex
+                    ? { ...player, cards: [...player.cards, ...drawnCards] }
+                    : player
+            );
+        });
+        setTurnIndex((turnIndex + 2) % players.length)
     }
         
     return (
