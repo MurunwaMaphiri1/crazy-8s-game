@@ -46,23 +46,29 @@ export default function CreatePlayer() {
                 alignItems: "center",
                 justifyContent: "center",
                 minHeight: "100vh",
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "#0f1f3d",
                 p: 2,
             }}
             >
             <Paper
                 elevation={3}
                 sx={{
-                p: 4,
-                width: "100%",
-                maxWidth: 400,
-                textAlign: "center",
-                borderRadius: 2,
+                    p: 4,
+                    width: "100%",
+                    maxWidth: 400,
+                    textAlign: "center",
+                    borderRadius: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#1e2d4d"
                 }}
             >
                 <Typography variant="h4" component="h1" gutterBottom sx={{ 
                     fontWeight: "normal", 
                     mb: 3, 
+                    color: "white"
                 }}>
                     Player Profile
                 </Typography>
@@ -111,6 +117,7 @@ export default function CreatePlayer() {
                 <Box sx={{ mb: 3 }}>
                 <Typography sx={{ 
                     mb: 2,
+                    color: "white"
                     }} 
                     variant="h6" component="h2" gutterBottom>
                     Enter Your Name
@@ -123,6 +130,7 @@ export default function CreatePlayer() {
                     placeholder="Murunwa"
                     sx={{ 
                     mb: 2, 
+                    color: "white"
                     }}
                 />
                 </Box>

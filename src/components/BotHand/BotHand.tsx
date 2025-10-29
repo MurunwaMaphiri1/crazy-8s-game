@@ -2,7 +2,6 @@ import Card from "../Card/Card"
 import type { Card as CardType } from "@/utils/interface"
 
 type BotHandProps = {
-    // cards: { code: string, value: string }[]
     cards: CardType[];
 }
 

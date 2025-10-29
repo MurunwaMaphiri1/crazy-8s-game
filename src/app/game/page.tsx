@@ -212,7 +212,7 @@ export default function Game() {
     return (
         <>
             {cardsDealt ? (
-                    <div className='flex flex-col items-center min-h-screen justify-center bg-gray-900'>
+                    <div className='flex flex-col items-center min-h-screen justify-center bg-[#0f1f3d]'>
                         <div>
                             <BotHand cards={players[1]?.cards || []} />
                         </div>
@@ -229,7 +229,7 @@ export default function Game() {
                     </div>
                 ) : (
                     // Show before dealing
-                    <div className='flex justify-center items-center min-h-screen bg-gray-900 text-white'>
+                    <div className='flex justify-center items-center min-h-screen bg-[#0f1f3d] text-white'>
                         <button
                             className='px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 text-xl'
                             onClick={deal}

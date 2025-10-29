@@ -4,7 +4,6 @@ import Card from "../Card/Card"
 import type { Card as CardType } from "../../utils/interface"
 
 type DrawingDeckProps = {
-    // deck: { code: string; value: string }[];
     deck: CardType[];
     onCardClick: (card: CardType) => void
 }

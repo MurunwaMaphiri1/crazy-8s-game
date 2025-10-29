@@ -2,8 +2,6 @@ import Card from "../Card/Card"
 import type { Card as CardType } from "@/utils/interface"
 
 type PlayerHandProps = {
-    // playerName: string,
-    // cards: { code: string; value: string;}[];
     cards: CardType[];
     onCardClick: (card: CardType) => void
 }
