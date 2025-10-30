@@ -6,25 +6,25 @@ const jsonCards = cards as Omit<Card, 'action'>[];
 export class Deck {
     cards: Card[] = [];
 
-      constructor(jsonCards: Omit<Card, 'action'>[]) {
+      constructor(jsonCards: Card[]) {
     this.cards = jsonCards.map(card => ({
       ...card,
-      action: this.getAction(card.value)
+      // action: this.getAction(card.value)
     }));
   }
 
-  private getAction(value: CardValue): Action {
-    switch (value) {
-      case '8':
-        return 'ChangeSuit';
-      case '2':
-        return 'DrawTwo';
-      case 'JACK':
-        return 'Skip';
-      default:
-        return 'None';
-    }
-  }
+  // private getAction(value: CardValue): Action {
+  //   switch (value) {
+  //     case '8':
+  //       return 'ChangeSuit';
+  //     case '2':
+  //       return 'DrawTwo';
+  //     case 'JACK':
+  //       return 'Skip';
+  //     default:
+  //       return 'None';
+  //   }
+  // }
 
   shuffle(): void {
     for (let i = this.cards.length - 1; i > 0; i--) {
@@ -42,10 +42,10 @@ export class Deck {
     return this.cards.splice(0, count);
   }
 
-  reset(jsonCards: Omit<Card, 'action'>[]): void {
+  reset(jsonCards: Card[]): void {
     this.cards = jsonCards.map(card => ({
       ...card,
-      action: this.getAction(card.value)
+      // action: this.getAction(card.value)
     }));
   }
 }

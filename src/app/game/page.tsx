@@ -9,6 +9,7 @@ import PlayerHand from '@/components/PlayerHand/PlayerHand';
 import BotHand from '@/components/BotHand/BotHand';
 import DrawingDeck from '@/components/DrawingDeck/DrawingDeck';
 import DiscardPile from '@/components/DiscardedPile/DiscardPile';
+import Scoreboard from '@/components/Scoreboard/Leaderboard'
 import next from 'next'
 
 export default function Game() {
@@ -18,12 +19,13 @@ export default function Game() {
     const [discardPile, setDiscardPile] = useState<Card[]>([]);
     const [turnIndex, setTurnIndex] = useState(0);
     const [suit, setSuit] = useState<Card['suit'] | null>(null);
-    const [leaderboard, setLeaderboard] = useState([]);
+    const [leaderboard, setLeaderboard] = useState<Player[]>([]);
     let [cardsDealt, setCardsDealt] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
 
     useEffect(() => {
         const player: Player = {
-            id: "15",
+            id: "1",
             name: localStorage.getItem("playerName") || "Joker" as string,
             avatar: localStorage.getItem("playerImg") || "/images/Persona-5-icons/Joker.jpg" as string,
             cards: [],
@@ -41,6 +43,7 @@ export default function Game() {
         }
 
         setPlayers([player, bot]);
+        console.log("Player ID:", players.map(p => ({ name: p.name, id: p.id })))
     }, [])
 
     useEffect(() => {
@@ -60,6 +63,27 @@ export default function Game() {
             setDeck(deck)
         }
     },[deck])
+
+    useEffect(() => {
+        if (!cardsDealt) return;
+
+        const finishedPlayer = players[turnIndex];
+
+        if (finishedPlayer && finishedPlayer.cards.length === 0) {
+            setLeaderboard(prev => [...prev, finishedPlayer]);
+
+            const updatedPlayers = players.filter(player => player.id !== finishedPlayer.id);
+
+            setPlayers(updatedPlayers);
+
+            setTurnIndex(turnIndex % updatedPlayers.length);
+
+            if (updatedPlayers.length === 1) {
+                setLeaderboard(prev => [...prev, updatedPlayers[0]]);
+                setGameOver(true);
+            }
+        }
+    }, [players, turnIndex, cardsDealt]);
 
 
     function deal() {
@@ -90,7 +114,7 @@ export default function Game() {
     function playCard(selected: Card) {
         const topCard = discardPile[discardPile.length - 1];
 
-        if (turnIndex == 0) {
+        if (players[turnIndex].isBot == false) {
             if (
                 selected.suit === suit ||
                 selected.value === topCard.value ||
@@ -246,10 +270,20 @@ export default function Game() {
         });
         setTurnIndex((turnIndex + 2) % players.length)
     }
+
+    function GameOver() {
+        return (
+                <>
+                    <Scoreboard leaderboard={leaderboard} playerId={players[0].id}/>
+                </>
+        )
+    }
         
     return (
         <>
-            {cardsDealt ? (
+            {gameOver ? (
+                <Scoreboard leaderboard={leaderboard} playerId={leaderboard[0].id} />
+            ) : cardsDealt ? (
                     <div className='flex flex-col items-center min-h-screen justify-center bg-[#0f1f3d]'>
                         <div>
                             <BotHand cards={players[1]?.cards || []} />
@@ -265,7 +299,7 @@ export default function Game() {
                             <PlayerHand onCardClick={playCard} cards={players[0]?.cards || []} />
                         </div>
                     </div>
-                ) : (
+            ) : (
                     // Show before dealing
                     <div className='flex justify-center items-center min-h-screen bg-[#0f1f3d] text-white'>
                         <button

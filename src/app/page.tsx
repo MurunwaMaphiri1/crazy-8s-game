@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Box, Paper, Typography, Button, Link as Link1 } from "@mui/material";
-import { LaptopMinimal } from "lucide-react";
+import { LaptopMinimal, Tv, Tv2 } from "lucide-react";
 import logo from "../../public/logo/imgbin_aaa796b12d7b8f93a079b0627308926a.png"
 import logo2 from "../../public/logo/imgbin_dc6459252a7a4081f1d9156e3f072feb.png"
 
@@ -46,28 +46,30 @@ export default function Home() {
           }}
         >
           <Typography
-            variant="h5" 
+            variant="h2" 
             component="h1" 
             gutterBottom 
             sx={{
               fontWeight: "normal",
               mt: 9,
-              color: "white"
+              color: "white",
+              fontFamily: "P5Hatty, sans-serif",
             }}
           >
            Welcome to Crazy 8&apos;s
           </Typography>
           <Typography
-            variant="body2" 
+            variant="body1" 
             gutterBottom 
             sx={{
               fontWeight: "normal",
               mb: 2,
               color: "white",
-              mt: 2
+              fontFamily: "P5Hatty, sans-serif",
+              fontSize: 20
             }}
           >
-            start playing
+            Start Playing
           </Typography>
           <Button 
             variant="outlined"
@@ -75,6 +77,7 @@ export default function Home() {
             sx={{
               mb: 3,
               width: 300,
+              height: 60,
               fontFamily: 'P5Hatty, sans-serif',
               color: "white",
               borderColor: "rgba(255, 255, 255, 0.3)",
@@ -83,13 +86,15 @@ export default function Home() {
               }
             }}
           >
-            <LaptopMinimal/> Play with Computer
+            <Tv2 /> Play with Computer
           </Button>
           <Link1 
             href="/create-player" 
             sx={{
               color: "white",
               textDecoration: "underline",
+              fontFamily: "P5Hatty, sans-serif",
+              fontSize: 20
             }}
           >
             Profile settings
