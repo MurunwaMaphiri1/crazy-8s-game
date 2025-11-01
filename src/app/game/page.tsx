@@ -24,6 +24,9 @@ export default function Game() {
     const [gameOver, setGameOver] = useState(false);
 
     useEffect(() => {
+
+        if (typeof window === "undefined") return;
+
         const player: Player = {
             id: "1",
             name: localStorage.getItem("playerName") || "Joker" as string,
@@ -43,7 +46,6 @@ export default function Game() {
         }
 
         setPlayers([player, bot]);
-        console.log("Player ID:", players.map(p => ({ name: p.name, id: p.id })))
     }, [])
 
     useEffect(() => {
@@ -55,35 +57,6 @@ export default function Game() {
             return () => clearTimeout(botTimeout);
         }
     }, [turnIndex, cardsDealt, players]);
-
-    useEffect(() => {
-        if (deck.cards.length == 0) {
-            deck.reset(jsonCards);
-            deck.shuffle()
-            setDeck(deck)
-        }
-    },[deck])
-
-    useEffect(() => {
-        if (!cardsDealt) return;
-
-        const finishedPlayer = players[turnIndex];
-
-        if (finishedPlayer && finishedPlayer.cards.length === 0) {
-            setLeaderboard(prev => [...prev, finishedPlayer]);
-
-            const updatedPlayers = players.filter(player => player.id !== finishedPlayer.id);
-
-            setPlayers(updatedPlayers);
-
-            setTurnIndex(turnIndex % updatedPlayers.length);
-
-            if (updatedPlayers.length === 1) {
-                setLeaderboard(prev => [...prev, updatedPlayers[0]]);
-                setGameOver(true);
-            }
-        }
-    }, [players, turnIndex, cardsDealt]);
 
 
     function deal() {
@@ -111,103 +84,145 @@ export default function Game() {
         setTurnIndex((turnIndex + 1) % players.length);
     }
 
+    function repopulateDeck() {
+        deck.reset(discardPile);
+        deck.shuffle()
+        setDeck(deck)
+    }
+
     function playCard(selected: Card) {
         const topCard = discardPile[discardPile.length - 1];
 
-        if (players[turnIndex].isBot == false) {
+        if (players[turnIndex].isBot === false) {
             if (
                 selected.suit === suit ||
                 selected.value === topCard.value ||
                 selected.value === "8"
             ) {
                 let cardRemoved = false;
-
-                const currentPlayer = players[0]; 
+                const currentPlayerIndex = turnIndex; 
+                const currentPlayer = players[currentPlayerIndex]; 
 
                 const newHand = currentPlayer.cards.filter((card) => {
-                    
-                        if (!cardRemoved && card.suit === selected.suit && card.value === selected.value) {
-                            cardRemoved = true;
-                            return false; // Exclude this card
-                        }
-                        return true; // Keep all other cards
+                    // Filter to remove the played card
+                    if (!cardRemoved && card.suit === selected.suit && card.value === selected.value) {
+                        cardRemoved = true;
+                        return false; 
+                    }
+                    return true; 
                 });
 
-            const updatedPlayers = players.map((player, index) => 
-                index === turnIndex
-                    ? { ...player, cards: newHand }
-                    : player
-            )
+                if (newHand.length === 0) {
+                    setLeaderboard(prev => [...prev, currentPlayer]);
 
-            setPlayers(updatedPlayers);
-            setDiscardPile((discardPile) => [...discardPile, selected]);
+                    const playersWithoutWinner = players.filter(player => player.id !== currentPlayer.id);
 
-            if (selected.value === topCard.value) {
-                setSuit(selected.suit)
+                    setPlayers(playersWithoutWinner);
+                    
+                    if (playersWithoutWinner.length === 1) {
+                        setLeaderboard(prev => [...prev, playersWithoutWinner[0]]);
+                        setGameOver(true);
+                    }
+
+                } else {
+                    const updatedPlayers = players.map((player, index) => 
+                        index === currentPlayerIndex
+                            ? { ...player, cards: newHand }
+                            : player
+                    )
+
+                    setPlayers(updatedPlayers);
+                
+                    setDiscardPile((discardPile) => [...discardPile, selected]);
+
+                    if (selected.value === topCard.value) {
+                        setSuit(selected.suit)
+                    }
+
+                    if (selected.value === "JACK" || selected.value === "2") {
+                        handleCardEffect(selected)
+                    } else if (selected.value === "8") {
+                        handleCardEffect(selected)
+                        advanceTurn()
+                    } else {
+                        advanceTurn()
+                    }
+
+                    if (deck.cards.length == 0) {
+                        repopulateDeck()
+                    }
+                }
             }
+        }
+    }
 
-            if (selected.value === "JACK" || selected.value === "2") {
-                handleCardEffect(selected)
-            } else if (selected.value === "8") {
-                handleCardEffect(selected)
-                advanceTurn()
-            } else {
-                advanceTurn()
-            }
+    function compPlay() {
+    const topCard = discardPile[discardPile.length - 1];
+    const currentPlayer = players[turnIndex]
+    let selected;
 
-            }
+    for (let card of currentPlayer.cards) {
+        if (
+            card.suit === suit ||
+            card.value === topCard.value ||
+            card.value === "8"
+        ) {
+            selected = card;
+            break;
+        }
+    }
+
+    if (selected) {
+        const updatedHand = currentPlayer.cards.filter((card) => 
+            !(card.suit === selected.suit && card.value === selected.value)
+        )
+
+        if (updatedHand.length === 0) {
+            setLeaderboard(prev => [...prev, currentPlayer]);
+
+            const playersWithoutWinner = players.filter(player => player.id !== currentPlayer.id);
+
+            setPlayers(playersWithoutWinner); 
+            setDiscardPile([...discardPile, selected]);
             
+            if (playersWithoutWinner.length === 1) {
+                setLeaderboard(prev => [...prev, playersWithoutWinner[0]]);
+                setGameOver(true);
+            }
+
+            } else {
+                const updatedPlayers = players.map((player, index) => 
+                    index === turnIndex
+                        ? { ...player, cards: updatedHand }
+                        : player
+                )
+
+                setPlayers(updatedPlayers);
+                setDiscardPile([...discardPile, selected]);
+
+                if (selected.value === topCard.value) {
+                    setSuit(selected.suit)
+                }
+
+                if (selected.value === "JACK" || selected.value === "2") {
+                    handleCardEffect(selected)
+                } else if (selected.value === "8") {
+                    handleCardEffect(selected)
+                    advanceTurn()
+                } else {
+                    advanceTurn()
+                }
+
+                if (deck.cards.length == 0) {
+                    repopulateDeck()
+                }
+            }
+
         } else {
             draw()
         }
     }
     
-
-    function compPlay() {
-        const topCard = discardPile[discardPile.length - 1];
-        const currentPlayer = players[turnIndex]
-        let selected;
-
-        for (let card of currentPlayer.cards) {
-            if (
-                card.suit === suit ||
-                card.value === topCard.value ||
-                card.value === "8"
-            ) {
-                selected = card;
-                break;
-            }
-        }
-
-        if (selected) {
-            const updatedHand = currentPlayer.cards.filter((card) => !(card.suit === selected.suit && card.value === selected.value))
-
-            const updatedPlayers = players.map((player, index) => 
-                index === turnIndex
-                    ? { ...player, cards: updatedHand }
-                    : player
-            )
-
-            setPlayers(updatedPlayers);
-            setDiscardPile([...discardPile, selected]);
-
-            if (selected.value === topCard.value) {
-                setSuit(selected.suit)
-            }
-
-            if (selected.value === "JACK" || selected.value === "2") {
-                handleCardEffect(selected)
-            } else if (selected.value === "8") {
-                handleCardEffect(selected)
-                advanceTurn()
-            } else {
-                advanceTurn()
-            }
-
-        } else {
-            draw()
-        }
-    }
 
     function draw() {
             const drawnCard = deck.takeCard();

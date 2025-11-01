@@ -9,22 +9,8 @@ export class Deck {
       constructor(jsonCards: Card[]) {
     this.cards = jsonCards.map(card => ({
       ...card,
-      // action: this.getAction(card.value)
     }));
   }
-
-  // private getAction(value: CardValue): Action {
-  //   switch (value) {
-  //     case '8':
-  //       return 'ChangeSuit';
-  //     case '2':
-  //       return 'DrawTwo';
-  //     case 'JACK':
-  //       return 'Skip';
-  //     default:
-  //       return 'None';
-  //   }
-  // }
 
   shuffle(): void {
     for (let i = this.cards.length - 1; i > 0; i--) {
@@ -45,7 +31,6 @@ export class Deck {
   reset(jsonCards: Card[]): void {
     this.cards = jsonCards.map(card => ({
       ...card,
-      // action: this.getAction(card.value)
     }));
   }
 }

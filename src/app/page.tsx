@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f1f3d] p-4">
       {/* Container for image + paper */}
-      <Box sx={{ position: "relative", width: "100%", maxWidth: 700 }}>
+      <div className="relative w-[100%] max-w-[700px]">
         {/* Logo positioned above the paper */}
         <Box
           sx={{
@@ -100,7 +100,7 @@ export default function Home() {
             Profile settings
           </Link1>
         </Paper>
-      </Box>
+      </div>
     </div>
   );
 }
