@@ -285,14 +285,6 @@ export default function Game() {
         });
         setTurnIndex((turnIndex + 2) % players.length)
     }
-
-    function GameOver() {
-        return (
-                <>
-                    <Scoreboard leaderboard={leaderboard} playerId={players[0].id}/>
-                </>
-        )
-    }
         
     return (
         <>
