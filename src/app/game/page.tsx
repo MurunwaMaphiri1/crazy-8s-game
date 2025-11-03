@@ -86,8 +86,17 @@ export default function Game() {
 
     function repopulateDeck() {
         deck.reset(discardPile);
-        deck.shuffle()
-        setDeck(deck)
+
+        deck.shuffle();
+
+        setDeck(deck);
+
+        const topCard = deck.takeCard();
+
+        if (topCard) {
+            setDiscardPile([topCard])
+            setSuit(topCard.suit);
+        } 
     }
 
     function playCard(selected: Card) {
@@ -307,7 +316,7 @@ export default function Game() {
                         </div>
                     </div>
             ) : (
-                    // Show before dealing
+                    // Try adding deck of cards here to use as button
                     <div className='flex justify-center items-center min-h-screen bg-[#0f1f3d] text-white'>
                         <button
                             className='px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 text-xl'
