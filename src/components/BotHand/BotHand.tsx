@@ -9,9 +9,19 @@ export default function BotHand({ cards }: BotHandProps) {
 
     return (
         <>
-            <div className="flex flex-wrap justify-center gap-1 mt-4 overflow-hidden">
-                {cards.map((card) => (
-                    <Card key={card.code} code={card.code} value={card.value} showBack={true}/>
+            <div className="flex justify-center gap-1 mt-4">
+                {cards.map((card, i) => (
+                    <div 
+                        key={card.code}
+                        className="sm:ml-0 -ml-15 first:ml-0"
+                        style={{zIndex: i}}
+                    >
+                        <Card 
+                            code={card.code} 
+                            value={card.value} 
+                            showBack={true}
+                        />
+                    </div>
                 ))}
             </div>
         </>

@@ -86,7 +86,14 @@ export default function Home() {
               }
             }}
           >
-            <Tv2 /> Play with Computer
+            <div className="flex flex-row gap-2">
+              <div>
+                <Tv2 />
+              </div>
+              <div>
+                Play with Computer
+              </div>
+            </div>
           </Button>
           <Link1 
             href="/create-player" 
@@ -98,6 +105,17 @@ export default function Home() {
             }}
           >
             Profile settings
+          </Link1>
+          <Link1 
+            href="/create-player" 
+            sx={{
+              color: "white",
+              textDecoration: "underline",
+              fontFamily: "P5Hatty, sans-serif",
+              fontSize: 20
+            }}
+          >
+            Rules of the game
           </Link1>
         </Paper>
       </div>

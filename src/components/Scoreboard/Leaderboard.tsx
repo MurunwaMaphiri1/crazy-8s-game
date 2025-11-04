@@ -1,43 +1,29 @@
 import styled from "styled-components"
 import { Player } from "@/utils/interface";
+import { Paper, Typography } from "@mui/material";
+import FirstPlace from "../../../public/Images/Medals/1st Place.png"
+import SecondPlace from "../../../public/Images/Medals/2nd Place.png"
+import ThirdPlace from "../../../public/Images/Medals/3rd Place.png"
+import { useRouter } from "next/navigation";
 
 const Root = styled.div`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 40px 70px;
-    border-radius: 12px;
-    font-size: 2rem;
     .row {
-        &.me {
-            color: yellow;
-
-            animation: pulse 1s infinite;
-        }
-
         display: flex;
         align-items: center;
         gap: 24px;
-
+        margin-bottom: 20px;
+        
         .order {
             width: 50px;
             font-size: 1.5rem;
         }
 
-        .img {
-            width: 50px;
+        .avatar {
+            width: 40px;
+            border-radius: 50px
         }
     }
-
-    @keyframes pulse {
-        50% {
-            transform: scale(1.05);
-        }
-    }
-`;
+`
 
 type PlayerProps = {
     id: string;
@@ -51,26 +37,71 @@ type ScoreboardProps = {
 }
 
 export default function Scoreboard({ leaderboard, playerId }: ScoreboardProps) {
+    const router = useRouter();
+
     if (!leaderboard || leaderboard.length == 0) {
         return null;
+    }
+
+    const handlePlayAgain = () => {
+        router.push('/');
+    }
+
+    function getMedal(index: number) {
+        if (index === 1) return FirstPlace.src;
     }
 
     return (
         <>
             <Root>
-                <h2>
-                    🏆Final Scores
-                </h2>
-                {leaderboard.map((player, index) => (
-                    <div
-                        key={player.id}
-                        className={`row ${player.id === playerId ? "me" : ""}`}
+                <div className="flex flex-col justify-center items-center mx-auto max-w-2xl min-h-screen p-4">
+                    <Paper
+                        elevation={3}
+                        sx={{
+                            p: 4,
+                            width: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            backgroundColor: "#1e2d4d",
+                            color: "white"
+                        }}
                     >
-                        <div className="order">{index + 1}</div>
-                        <img src={player.avatar} alt={player.name} className="img"/>
-                        <div>{player.name}</div>
-                    </div>
-                ))}
+                        <div className="">
+                            <Typography
+                                variant="body1"
+                                gutterBottom
+                                sx={{
+                                    fontWeight: "normal",
+                                    color: "white",
+                                    fontFamily: "P5Hatty, sans-serif",
+                                    fontSize: "2rem",
+                                    marginBottom: "30px"
+                                }}
+                            >
+                                Ranking
+                            </Typography>
+                        </div>
+                            {leaderboard.map((player, index) => (
+                                <div
+                                    key={player.id}
+                                    className={`row ${player.id === playerId ? "me" : ""}`}
+                                >
+                                    <div className="order">{index + 1}</div>
+                                    <img className="avatar" src={player.avatar} alt={player.name} />
+                                    <div className="text-white w-[150px] text-[25px]">{player.name}</div>
+                                    <img className="w-[30px]" src={getMedal(index + 1)} />
+                                </div>
+                            ))}
+                            <div className="mt-5 justify-center items-center flex">
+                                <button
+                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover: bg-blue-500 text-xl"
+                                    onClick={handlePlayAgain}
+                                >
+                                    Play Again
+                                </button>
+                            </div>
+                    </Paper>
+                </div>
             </Root>
         </>
     )

@@ -131,6 +131,7 @@ export default function Game() {
                     if (playersWithoutWinner.length === 1) {
                         setLeaderboard(prev => [...prev, playersWithoutWinner[0]]);
                         setGameOver(true);
+                        return;
                     }
 
                 } else {
@@ -197,6 +198,7 @@ export default function Game() {
             if (playersWithoutWinner.length === 1) {
                 setLeaderboard(prev => [...prev, playersWithoutWinner[0]]);
                 setGameOver(true);
+                return;
             }
 
             } else {
@@ -298,14 +300,25 @@ export default function Game() {
     return (
         <>
             {gameOver ? (
-                <Scoreboard leaderboard={leaderboard} playerId={leaderboard[0].id} />
+                <div className='flex min-h-screen items-center justify-center bg-[#0f1f3d]'>
+                    <Scoreboard leaderboard={leaderboard} playerId={leaderboard[0].id} />
+                </div>
             ) : cardsDealt ? (
                     <div className='flex flex-col items-center min-h-screen justify-center bg-[#0f1f3d]'>
                         <div>
                             <BotHand cards={players[1]?.cards || []} />
                         </div>
-                        <div className='flex mt-3'>
-                            {suit}
+                        <div className='flex flex-col mt-3'>
+                            <div className=''>
+                                <p>
+                                    Current suit: {suit}
+                                </p>
+                            </div>
+                            <div className=''>
+                                <p>
+                                    Player Turn: {players[turnIndex].name}
+                                </p>
+                            </div>
                         </div>
                         <div className='flex flex-row gap-4 mt-5 justify-center'>
                             <DrawingDeck onCardClick={draw} deck={deck.cards} />
