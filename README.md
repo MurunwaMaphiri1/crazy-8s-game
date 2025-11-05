@@ -1,9 +1,32 @@
-# Crazy Eights Rules
+# Crazy Eights
 
 ![Game Cover / Logo Placeholder](public/Images/Screenshots/HomePage.png)
 
 Crazy Eights is a shedding-style card game. The goal is simple: get rid of all the cards in your hand before the other player.
 
+---
+## Project Setup
+
+Follow these steps to run Crazy Eights locally:
+
+1. **Clone the repository**  
+```bash
+git clone https://github.com/your-username/crazy-8s-game.git
+cd crazy-8s-game
+```
+
+2. **Install Dependencies**
+```bash
+npm install
+```
+
+3. **Start the development server**
+```bash
+npm run dev
+```
+
+4. **Open the game in your browser**
+- Navigate to http://localhost:3000 (or the URL shown in the terminal)
 ---
 
 ## Objective
