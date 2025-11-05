@@ -68,7 +68,8 @@ export default function CreatePlayer() {
                 <Typography variant="h4" component="h1" gutterBottom sx={{ 
                     fontWeight: "normal", 
                     mb: 3, 
-                    color: "white"
+                    color: "white",
+                    fontFamily: "Galindo, sans-serif",
                 }}>
                     Player Profile
                 </Typography>
@@ -117,7 +118,8 @@ export default function CreatePlayer() {
                 <Box sx={{ mb: 3 }}>
                 <Typography sx={{ 
                     mb: 2,
-                    color: "white"
+                    color: "white",
+                    fontFamily: "Galindo, sans-serif",
                     }} 
                     variant="h6" component="h2" gutterBottom>
                     Enter Your Name
@@ -130,7 +132,7 @@ export default function CreatePlayer() {
                     placeholder="Murunwa"
                     sx={{ 
                     mb: 2, 
-                    color: "white"
+                    color: "white",
                     }}
                 />
                 </Box>
@@ -147,6 +149,7 @@ export default function CreatePlayer() {
                     fontSize: "1.1rem",
                     backgroundColor: "#1976d2",
                     "&:hover": { backgroundColor: "#1565c0" },
+                    fontFamily: "Galindo, sans-serif",
                 }}
                 >
                 Save and Go

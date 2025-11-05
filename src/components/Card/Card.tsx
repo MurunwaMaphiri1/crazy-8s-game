@@ -15,7 +15,7 @@ export default function Card({ code, showBack = false, onClick }: CardProps) {
 
   if (!cardData) {
     return (
-      <div className="flex h-[60px] max-w-[240px] w-full border-2 border-r-4 border-gray-800 rounded-lg items-center justify-center bg-gray-200">
+      <div className="flex h-[60px] max-w-60 w-full border-2 border-r-4 border-gray-800 rounded-lg items-center justify-center bg-gray-200">
         <span className="text-xs text-gray-600">Card not found</span>
       </div>
     )

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import cards from '../../utils/deckofcards.json'
 import bots from '../../utils/bots.json'
-import type { Card, CardValue, Action } from '../../utils/interface'
+import type { Card, Suit } from '../../utils/interface'
 import { Deck } from '@/utils/Deck';
 import { Player, Bot } from '../../utils/interface';
 import PlayerHand from '@/components/PlayerHand/PlayerHand';
@@ -11,6 +11,7 @@ import DrawingDeck from '@/components/DrawingDeck/DrawingDeck';
 import DiscardPile from '@/components/DiscardedPile/DiscardPile';
 import Scoreboard from '@/components/Scoreboard/Leaderboard'
 import next from 'next'
+import SuitChange from '@/components/SuitChange/SuitChange'
 
 export default function Game() {
     const jsonCards = cards as Card[];
@@ -22,6 +23,7 @@ export default function Game() {
     const [leaderboard, setLeaderboard] = useState<Player[]>([]);
     let [cardsDealt, setCardsDealt] = useState(false);
     const [gameOver, setGameOver] = useState(false);
+    const [showSuitPicker, setSuitPicker] = useState(false);
 
     useEffect(() => {
 
@@ -48,7 +50,9 @@ export default function Game() {
         setPlayers([player, bot]);
     }, [])
 
+
     useEffect(() => {
+        if (gameOver) return;
         if (cardsDealt && players.length > 0 && players[turnIndex]?.isBot == true) {
             const botTimeout = setTimeout(() => {
                 compPlay()
@@ -59,12 +63,19 @@ export default function Game() {
     }, [turnIndex, cardsDealt, players]);
 
 
+    useEffect(() => {
+        if (deck.cards.length === 0 && discardPile.length > 1) {
+            repopulateDeck();
+        }
+    }, [deck.cards.length, discardPile.length])
+
+
     function deal() {
         deck.shuffle();
 
         const updatedPlayers = players.map(player => ({
             ...player,
-            cards: deck.takeCards(5)
+            cards: deck.takeCards(8)
         }))
 
         const topCard = deck.takeCard();
@@ -80,23 +91,22 @@ export default function Game() {
         setCardsDealt(true);
     }
 
+
     function advanceTurn() {
         setTurnIndex((turnIndex + 1) % players.length);
     }
 
+
     function repopulateDeck() {
-        deck.reset(discardPile);
+        const cardsToReshuffle = discardPile.slice(0, -1);
+        const topCard = discardPile[discardPile.length - 1];
 
-        deck.shuffle();
+        const newDeck = new Deck(cardsToReshuffle);
+        newDeck.shuffle();
+        setDeck(newDeck);
 
-        setDeck(deck);
-
-        const topCard = deck.takeCard();
-
-        if (topCard) {
-            setDiscardPile([topCard])
-            setSuit(topCard.suit);
-        } 
+        setDiscardPile([topCard]);
+        setSuit(topCard.suit);
     }
 
     function playCard(selected: Card) {
@@ -153,13 +163,8 @@ export default function Game() {
                         handleCardEffect(selected)
                     } else if (selected.value === "8") {
                         handleCardEffect(selected)
-                        advanceTurn()
                     } else {
                         advanceTurn()
-                    }
-
-                    if (deck.cards.length == 0) {
-                        repopulateDeck()
                     }
                 }
             }
@@ -167,71 +172,67 @@ export default function Game() {
     }
 
     function compPlay() {
-    const topCard = discardPile[discardPile.length - 1];
-    const currentPlayer = players[turnIndex]
-    let selected;
+        const topCard = discardPile[discardPile.length - 1];
+        const currentPlayer = players[turnIndex]
+        let selected;
 
-    for (let card of currentPlayer.cards) {
-        if (
-            card.suit === suit ||
-            card.value === topCard.value ||
-            card.value === "8"
-        ) {
-            selected = card;
-            break;
-        }
-    }
-
-    if (selected) {
-        const updatedHand = currentPlayer.cards.filter((card) => 
-            !(card.suit === selected.suit && card.value === selected.value)
-        )
-
-        if (updatedHand.length === 0) {
-            setLeaderboard(prev => [...prev, currentPlayer]);
-
-            const playersWithoutWinner = players.filter(player => player.id !== currentPlayer.id);
-
-            setPlayers(playersWithoutWinner); 
-            setDiscardPile([...discardPile, selected]);
-            
-            if (playersWithoutWinner.length === 1) {
-                setLeaderboard(prev => [...prev, playersWithoutWinner[0]]);
-                setGameOver(true);
-                return;
+        for (let card of currentPlayer.cards) {
+            if (
+                card.suit === suit ||
+                card.value === topCard.value ||
+                card.value === "8"
+            ) {
+                selected = card;
+                break;
             }
+        }
+
+        if (selected) {
+            const updatedHand = currentPlayer.cards.filter((card) => 
+                !(card.suit === selected.suit && card.value === selected.value)
+            )
+
+            if (updatedHand.length === 0) {
+                setLeaderboard(prev => [...prev, currentPlayer]);
+
+                const playersWithoutWinner = players.filter(player => player.id !== currentPlayer.id);
+
+                setPlayers(playersWithoutWinner); 
+                setDiscardPile([...discardPile, selected]);
+                
+                if (playersWithoutWinner.length === 1) {
+                    setLeaderboard(prev => [...prev, playersWithoutWinner[0]]);
+                    setGameOver(true);
+                    return;
+                }
+
+                } else {
+                    const updatedPlayers = players.map((player, index) => 
+                        index === turnIndex
+                            ? { ...player, cards: updatedHand }
+                            : player
+                    )
+
+                    setPlayers(updatedPlayers);
+                    setDiscardPile([...discardPile, selected]);
+
+                    if (selected.value === topCard.value) {
+                        setSuit(selected.suit)
+                    }
+
+                    if (selected.value === "JACK" || selected.value === "2") {
+                        handleCardEffect(selected)
+                    } else if (selected.value === "8") {
+                        handleCardEffect(selected)
+                        advanceTurn()
+                    } else {
+                        advanceTurn()
+                    }
+                }
 
             } else {
-                const updatedPlayers = players.map((player, index) => 
-                    index === turnIndex
-                        ? { ...player, cards: updatedHand }
-                        : player
-                )
-
-                setPlayers(updatedPlayers);
-                setDiscardPile([...discardPile, selected]);
-
-                if (selected.value === topCard.value) {
-                    setSuit(selected.suit)
-                }
-
-                if (selected.value === "JACK" || selected.value === "2") {
-                    handleCardEffect(selected)
-                } else if (selected.value === "8") {
-                    handleCardEffect(selected)
-                    advanceTurn()
-                } else {
-                    advanceTurn()
-                }
-
-                if (deck.cards.length == 0) {
-                    repopulateDeck()
-                }
+                draw()
             }
-
-        } else {
-            draw()
-        }
     }
     
 
@@ -257,22 +258,26 @@ export default function Game() {
                 jumpPlayer()
                 break;
             case "8":
-                const suitCount: Record<string, number> = {};
+                if (players[turnIndex].isBot == true) {
+                    const suitCount: Record<string, number> = {};
 
-                for (let card of players[turnIndex].cards) {
-                    suitCount[card.suit] = (suitCount[card.suit] || 0) + 1;
-                }
-
-                let maxCount = 0;
-                let chosenSuit: Card['suit'] | null = null;
-
-                for (let [cardSuit, count] of Object.entries(suitCount)) {
-                    if (count > maxCount) {
-                        maxCount = count;
-                        chosenSuit = cardSuit as Card['suit'];
+                    for (let card of players[turnIndex].cards) {
+                        suitCount[card.suit] = (suitCount[card.suit] || 0) + 1;
                     }
-                }
-                setSuit(chosenSuit || selected.suit);
+
+                    let maxCount = 0;
+                    let chosenSuit: Card['suit'] | null = null;
+
+                    for (let [cardSuit, count] of Object.entries(suitCount)) {
+                        if (count > maxCount) {
+                            maxCount = count;
+                            chosenSuit = cardSuit as Card['suit'];
+                        }
+                    }
+                    setSuit(chosenSuit || selected.suit);
+                    } else {
+                        setSuitPicker(true);
+                    }
                 break;
             default:
                 break;
@@ -296,6 +301,13 @@ export default function Game() {
         });
         setTurnIndex((turnIndex + 2) % players.length)
     }
+
+
+    function changeSuit(newSuit: Suit) {
+        setSuit(newSuit);
+        setSuitPicker(false);
+        advanceTurn();
+    }
         
     return (
         <>
@@ -316,7 +328,7 @@ export default function Game() {
                             </div>
                             <div className=''>
                                 <p>
-                                    Player Turn: {players[turnIndex].name}
+                                    Player Turn: {players[turnIndex]?.name}
                                 </p>
                             </div>
                         </div>
@@ -324,16 +336,22 @@ export default function Game() {
                             <DrawingDeck onCardClick={draw} deck={deck.cards} />
                             <DiscardPile cards={discardPile} />
                         </div>
+                        {showSuitPicker && (
+                            <div>
+                                <SuitChange onClick={changeSuit}/>
+                            </div>
+                        )}
                         <div>
                             <PlayerHand onCardClick={playCard} cards={players[0]?.cards || []} />
                         </div>
                     </div>
             ) : (
-                    // Try adding deck of cards here to use as button
                     <div className='flex justify-center items-center min-h-screen bg-[#0f1f3d] text-white'>
                         <button
                             className='px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 text-xl'
                             onClick={deal}
+                            disabled={players.length === 0 && !cardsDealt}
+                            style={{ cursor: 'pointer' }}
                         >
                             Deal Cards
                         </button>

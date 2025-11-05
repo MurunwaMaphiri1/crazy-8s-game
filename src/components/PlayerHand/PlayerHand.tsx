@@ -14,7 +14,7 @@ export default function PlayerHand({ cards, onCardClick }: PlayerHandProps) {
                 {cards.map((card, i) => (
                     <div
                         key={card.code}
-                        className="sm:ml-0 -ml-15 first:ml-0"
+                        className="sm:ml-0 -ml-15 first:ml-0 md:ml:0 -ml-15 first:ml-0"
                         style={{zIndex: i}}
                     >
                         <Card  

@@ -1,6 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Saira } from "next/font/google";
+import { Geist, Geist_Mono, Saira, Galindo } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
+
+const markinLT = localFont({
+  src: '../../public/fonts/Markin-LT-Ultra-Bold.ttf',
+  variable: "--font-markin-lt"
+})
+
+const galindo = Galindo({
+  variable: "--font-galindo",
+  subsets: ["latin"],
+  weight: "400"
+})
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +26,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Crazy Eights",
-  description: "By Murunwa",
+  description: "A quick and competitive card game where matching suits and ranks keeps the game moving, and playing an eight lets you flip the rules in your favor.",
 };
 
 const saira = Saira({
@@ -31,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${saira.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${galindo.variable}antialiased`}
       >
         {children}
       </body>

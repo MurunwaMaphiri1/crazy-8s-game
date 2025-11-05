@@ -2,8 +2,6 @@ import styled from "styled-components"
 import { Player } from "@/utils/interface";
 import { Paper, Typography } from "@mui/material";
 import FirstPlace from "../../../public/Images/Medals/1st Place.png"
-import SecondPlace from "../../../public/Images/Medals/2nd Place.png"
-import ThirdPlace from "../../../public/Images/Medals/3rd Place.png"
 import { useRouter } from "next/navigation";
 
 const Root = styled.div`
@@ -24,12 +22,6 @@ const Root = styled.div`
         }
     }
 `
-
-type PlayerProps = {
-    id: string;
-    name: string;
-    imgUrl: string;
-}
 
 type ScoreboardProps = {
     leaderboard: Player[];
@@ -73,8 +65,8 @@ export default function Scoreboard({ leaderboard, playerId }: ScoreboardProps) {
                                 sx={{
                                     fontWeight: "normal",
                                     color: "white",
-                                    fontFamily: "P5Hatty, sans-serif",
-                                    fontSize: "2rem",
+                                    fontFamily: "MarkinLt, sans-serif",
+                                    fontSize: "1.5rem",
                                     marginBottom: "30px"
                                 }}
                             >
@@ -94,7 +86,7 @@ export default function Scoreboard({ leaderboard, playerId }: ScoreboardProps) {
                             ))}
                             <div className="mt-5 justify-center items-center flex">
                                 <button
-                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg hover: bg-blue-500 text-xl"
+                                    className="px-6 py-3 bg-blue-600 text-white rounded-lg text-xl"
                                     onClick={handlePlayAgain}
                                 >
                                     Play Again
