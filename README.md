@@ -48,21 +48,21 @@ A valid play ends your turn unless a special card effect says otherwise.
 
 ---
 
+## Suit Change Component
+
+![Suit Picker Example Placeholder](public/Images/Screenshots/SuitChangeComponent.png)
+
+- The suit chosen after an 8 becomes the active suit  
+- Normally only one card per turn
+
+---
+
 ## Winning the Round
 
 ![Victory Screen Placeholder](public/Images/Screenshots/Leaderboard.png)
 
 - A player wins when they have **no cards left**
-- Remaining players keep their cards
-
----
-
-## Notes
-
-![Suit Picker Example Placeholder](public/Images/Screenshots/SuitChangeComponent.png)
-
-- The suit chosen after an 8 becomes the active suit  
-- Normally only one card per turn  
+- Remaining players keep their cards  
 
 ---
 
