@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crazy Eights Rules
 
-## Getting Started
+![Game Cover / Logo Placeholder](public/Images/Screenshots/HomePage.png)
 
-First, run the development server:
+Crazy Eights is a shedding-style card game. The goal is simple: get rid of all the cards in your hand before the other player.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Objective
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![Discard Pile Example Placeholder](public/Images/Screenshots/GamePage.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Play cards from your hand to the discard pile by matching either the **suit** or the **value** of the top card.  
+First player to empty their hand wins the round.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Standard 52-card deck  
+- Each player starts with **8 cards**
+- One card is placed face-up to start the discard pile
+- Remaining cards form the draw pile
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Turns
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+On your turn, you may:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Play a card** that matches the suit or value of the top discard  
+2. **Play an Eight (8)** to change the suit  
+3. **Draw a card** if you cannot play  
+
+A valid play ends your turn unless a special card effect says otherwise.
+
+---
+
+## Special Cards
+
+| Card | Effect |
+|------|--------|
+| **2** | Next player must draw 2 cards |
+| **Jack** | Skips the next player's turn |
+| **8** | Wild card. Player chooses a new suit |
+
+> If the draw pile runs out, the discard pile (except the top card) is reshuffled into a new deck.
+
+---
+
+## Winning the Round
+
+![Victory Screen Placeholder](public/Images/Screenshots/Leaderboard.png)
+
+- A player wins when they have **no cards left**
+- Remaining players keep their cards
+
+---
+
+## Notes
+
+![Suit Picker Example Placeholder](public/Images/Screenshots/SuitChangeComponent.png)
+
+- The suit chosen after an 8 becomes the active suit  
+- Normally only one card per turn  
+
+---
+
+## Future Improvements🧠
+
+- Add More players
+- Add card sounds and animations
+
+---
+
+Have fun, and may your hand be full of Eights at just the right dramatic moment.
