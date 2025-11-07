@@ -11,7 +11,7 @@ Follow these steps to run Crazy Eights locally:
 
 1. **Clone the repository**  
 ```bash
-git clone https://github.com/your-username/crazy-8s-game.git
+git clone https://github.com/MurunwaMaphiri1/crazy-8s-game.git
 cd crazy-8s-game
 ```
 
