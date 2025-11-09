@@ -1,6 +1,7 @@
 import cards from "../../utils/deckofcards.json"
 import Image from "next/image"
 import type { Card } from "../../utils/interface"
+import React from "react"
 
 type CardProps = {
   code: string
@@ -9,7 +10,7 @@ type CardProps = {
   onClick? : () => void
 }
 
-export default function Card({ code, showBack = false, onClick }: CardProps) {
+function Card({ code, showBack = false, onClick }: CardProps) {
   // Find the card data based on the code
   const cardData = cards.find(card => card.code === code)
 
@@ -39,3 +40,5 @@ export default function Card({ code, showBack = false, onClick }: CardProps) {
     </div>
   )
 }
+
+export default React.memo(Card);

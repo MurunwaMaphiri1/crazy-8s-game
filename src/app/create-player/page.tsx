@@ -4,16 +4,16 @@ import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import React, { useState } from "react"
 
 const avatarImages = [
-  { id: 1, name: "Akechi", path: "/images/Persona-5-icons/Akechi.jpg" },
-  { id: 2, name: "Ann", path: "/images/Persona-5-icons/Ann.jpg" },
-  { id: 3, name: "Futaba", path: "/images/Persona-5-icons/Futaba.jpg" },
-  { id: 4, name: "Haru", path: "/images/Persona-5-icons/Haru.jpg" },
-  { id: 5, name: "Joker", path: "/images/Persona-5-icons/Joker.jpg" },
-  { id: 6, name: "Kasumi", path: "/images/Persona-5-icons/Kasumi.jpg" },
-  { id: 7, name: "Makoto", path: "/images/Persona-5-icons/Makoto.jpg" },
-  { id: 8, name: "Morgana", path: "/images/Persona-5-icons/Morgana.jpg" },
-  { id: 9, name: "Ryuji", path: "/images/Persona-5-icons/Ryuji.jpg" },
-  { id: 10, name: "Yusuke", path: "/images/Persona-5-icons/Yusuke.jpg" },
+  { id: 1, name: "Akechi", path: "/Images/Persona-5-icons/Akechi.jpg" },
+  { id: 2, name: "Ann", path: "/Images/Persona-5-icons/Ann.jpg" },
+  { id: 3, name: "Futaba", path: "/Images/Persona-5-icons/Futaba.jpg" },
+  { id: 4, name: "Haru", path: "/Images/Persona-5-icons/Haru.jpg" },
+  { id: 5, name: "Joker", path: "/Images/Persona-5-icons/Joker.jpg" },
+  { id: 6, name: "Kasumi", path: "/Images/Persona-5-icons/Kasumi.jpg" },
+  { id: 7, name: "Makoto", path: "/Images/Persona-5-icons/Makoto.jpg" },
+  { id: 8, name: "Morgana", path: "/Images/Persona-5-icons/Morgana.jpg" },
+  { id: 9, name: "Ryuji", path: "/Images/Persona-5-icons/Ryuji.jpg" },
+  { id: 10, name: "Yusuke", path: "/Images/Persona-5-icons/Yusuke.jpg" },
 ];
 
 export default function CreatePlayer() {
