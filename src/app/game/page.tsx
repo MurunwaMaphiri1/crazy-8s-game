@@ -41,8 +41,8 @@ export default function Game() {
 
         const bot: Bot = {
             id: "6",
-            name: randomBot.name || "Futaba",
-            avatar: randomBot.avatar || "/images/Persona-5-icons/Futaba.jpg",
+            name: randomBot.name || "Ann",
+            avatar: randomBot.avatar || "/images/Persona-5-icons/Ann.jpg",
             cards: [],
             isBot: true
         }
