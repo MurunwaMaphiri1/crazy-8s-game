@@ -56,7 +56,7 @@ export default function Game() {
         if (cardsDealt && players.length > 0 && players[turnIndex]?.isBot == true) {
             const botTimeout = setTimeout(() => {
                 compPlay()
-            }, 250);
+            }, 1000);
 
             return () => clearTimeout(botTimeout);
         }
