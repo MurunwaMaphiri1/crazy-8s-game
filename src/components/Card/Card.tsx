@@ -1,4 +1,3 @@
-"use client"
 import cards from "../../utils/deckofcards.json"
 import Image from "next/image"
 import type { Card } from "../../utils/interface"
@@ -31,7 +30,7 @@ export default function Card({ code, showBack = false, onClick }: CardProps) {
         className="relative flex h-[150px] max-w-[100px] w-full rounded-sm overflow-hidden shadow-lg bg-white"
         style={{ cursor: 'pointer' }}
     >
-      <img
+      <Image
         className="w-full h-full object-fit"
         src={imageSrc}
         alt={showBack ? "Card back" : `${cardData.value} of ${cardData.suit}`}
