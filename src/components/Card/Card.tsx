@@ -11,7 +11,7 @@ type CardProps = {
   onClick? : () => void
 }
 
-function Card({ code, showBack = false, onClick }: CardProps) {
+export default function Card({ code, showBack = false, onClick }: CardProps) {
   // Find the card data based on the code
   const cardData = cards.find(card => card.code === code)
 
@@ -41,5 +41,3 @@ function Card({ code, showBack = false, onClick }: CardProps) {
     </div>
   )
 }
-
-export default React.memo(Card);
