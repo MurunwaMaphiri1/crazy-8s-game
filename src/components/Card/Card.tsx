@@ -1,3 +1,4 @@
+"use client"
 import cards from "../../utils/deckofcards.json"
 import Image from "next/image"
 import type { Card } from "../../utils/interface"
