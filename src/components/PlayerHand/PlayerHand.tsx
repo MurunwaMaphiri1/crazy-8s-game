@@ -10,7 +10,7 @@ export default function PlayerHand({ cards, onCardClick }: PlayerHandProps) {
 
     return (
         <>
-            <div className="flex justify-center gap-1 mt-4">
+            <div className="flex justify-center mt-4 items-center">
                 {cards.map((card, i) => (
                     <div
                         key={card.code}

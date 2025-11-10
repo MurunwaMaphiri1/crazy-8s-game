@@ -9,11 +9,11 @@ export default function BotHand({ cards }: BotHandProps) {
 
     return (
         <>
-            <div className="flex justify-center gap-1 mt-4">
+            <div className="flex justify-center mt-4 items-center">
                 {cards.map((card, i) => (
                     <div 
                         key={card.code}
-                        className="sm:ml-0 -ml-15 first:ml-0"
+                        className="first:ml-0 -ml-[60px] sm:-ml-8 md:-ml-6"
                         style={{zIndex: i}}
                     >
                         <Card 
