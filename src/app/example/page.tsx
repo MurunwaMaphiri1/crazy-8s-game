@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { useEffect } from "react";
 import { useGameStore } from "../../zustands/store";
 import Scoreboard from "@/components/Scoreboard/Leaderboard";
@@ -8,7 +9,7 @@ import BotHand from "@/components/BotHand/BotHand";
 import DrawingDeck from "@/components/DrawingDeck/DrawingDeck";
 import DiscardPile from "@/components/DiscardedPile/DiscardPile";
 
-export default function Game() {
+export default function Example() {
   const { players, 
           initPlayers,
           repopulateDeck,
@@ -32,7 +33,7 @@ export default function Game() {
           showSuitPicker
         } = useGameStore();
 
-        
+  // Initialize players on first render
   useEffect(() => {
     initPlayers();
   }, [initPlayers]);
@@ -53,7 +54,8 @@ export default function Game() {
         }
   }, [deck.cards.length, discardPile.length]);
 
-        
+
+
     return (
         <>
             {gamesOver ? (
@@ -104,4 +106,5 @@ export default function Game() {
             )}
         </>
             );
-    }
+
+}
