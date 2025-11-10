@@ -32,7 +32,7 @@ export default function Game() {
         const player: Player = {
             id: "1",
             name: localStorage.getItem("playerName") || "Joker" as string,
-            avatar: localStorage.getItem("playerImg") || "/images/Persona-5-icons/Joker.jpg" as string,
+            avatar: localStorage.getItem("playerImg") || "/Images/Persona-5-icons/Joker.jpg" as string,
             cards: [],
             isBot: false
         }
