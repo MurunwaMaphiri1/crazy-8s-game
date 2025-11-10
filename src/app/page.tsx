@@ -4,8 +4,11 @@ import Link from "next/link";
 import { Box, Paper, Typography, Button, Link as Link1 } from "@mui/material";
 import { Tv2 } from "lucide-react";
 import logo from "../../public/logo/imgbin_aaa796b12d7b8f93a079b0627308926a.png"
+import { useGameStore } from "../zustands/store"
 
 export default function Home() {
+  const { resetGame } = useGameStore();
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f1f3d] p-4">
       {/* Container for image + paper */}
@@ -92,6 +95,31 @@ export default function Home() {
               </div>
               <div>
                 Play with Computer
+              </div>
+            </div>
+          </Button>
+          <Button 
+            variant="outlined"
+            href="/example"
+            onClick={resetGame}
+            sx={{
+              mb: 3,
+              width: 300,
+              height: 60,
+              fontFamily: "Galindo, sans-serif",
+              color: "white",
+              borderColor: "rgba(255, 255, 255, 0.3)",
+              "&:hover": {
+                borderColor: "white",
+              }
+            }}
+          >
+            <div className="flex flex-row gap-2">
+              <div>
+                <Tv2 />
+              </div>
+              <div>
+                Play with Computer (Zustands)
               </div>
             </div>
           </Button>
