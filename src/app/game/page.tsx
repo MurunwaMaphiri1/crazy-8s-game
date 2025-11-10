@@ -48,10 +48,10 @@ export default function Game() {
   }, [turnIndex, cardsDealt, players]);
 
   useEffect(() => {
-        if (deck.cards.length === 0 && discardPile.length > 1) {
+        if (deck.length === 0 && discardPile.length > 1) {
             repopulateDeck();
         }
-  }, [deck.cards.length, discardPile.length]);
+  }, [deck.length, discardPile.length]);
 
         
     return (
@@ -78,7 +78,7 @@ export default function Game() {
                             </div>
                         </div>
                         <div className='flex flex-row gap-4 mt-5 justify-center'>
-                            <DrawingDeck onCardClick={draw} deck={deck.cards} />
+                            <DrawingDeck onCardClick={draw} deck={deck} />
                             <DiscardPile cards={discardPile} />
                         </div>
                         {showSuitPicker && (
