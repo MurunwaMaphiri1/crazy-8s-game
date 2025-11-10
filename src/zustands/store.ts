@@ -110,8 +110,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
   //Advance turn
   advanceTurn: () => {
     const { turnIndex, players, setTurnIndex } = get();
-
-    // const nextIndex = (turnIndex + 1) % players.length;
     setTurnIndex((turnIndex + 1) % players.length);
   },
 
@@ -175,7 +173,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   //Draw 1
   draw: () => {
-    const { players, turnIndex, deck, setPlayers, advanceTurn } = get();
+    const { players, turnIndex, deck, setPlayers, advanceTurn, setDeck } = get();
     const drawCard = deck.takeCard();
     
     if (!drawCard) return;
@@ -187,12 +185,13 @@ export const useGameStore = create<GameStore>((set, get) => ({
     )
 
     setPlayers(updatedPlayers);
+    setDeck(deck.cards)
     advanceTurn();
   },
 
   //Draw 2
   draw2: () => {
-    const { players, turnIndex, deck, setPlayers, setTurnIndex } = get();
+    const { players, turnIndex, deck, setPlayers, setTurnIndex, setDeck } = get();
     const drawnCards: Card[] = deck.takeCards(2);
     const nextPlayerIndex = (turnIndex + 1) % players.length;
 
@@ -203,6 +202,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     )
 
     setPlayers(updatedPlayers);
+    setDeck(deck.cards)
     setTurnIndex((turnIndex + 2) % players.length);
   },
 

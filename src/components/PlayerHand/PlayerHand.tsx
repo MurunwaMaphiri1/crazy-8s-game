@@ -13,7 +13,7 @@ export default function PlayerHand({ cards, onCardClick }: PlayerHandProps) {
             <div className="flex justify-center gap-1 mt-4">
                 {cards.map((card, i) => (
                     <div
-                        key={card.code}
+                        key={crypto.randomUUID()}
                         className="sm:ml-0 -ml-15 first:ml-0 md:ml:0 -ml-15 first:ml-0"
                         style={{zIndex: i}}
                     >
