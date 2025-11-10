@@ -77,30 +77,6 @@ export default function Home() {
           <Button 
             variant="outlined"
             href="/game"
-            sx={{
-              mb: 3,
-              width: 300,
-              height: 60,
-              fontFamily: "Galindo, sans-serif",
-              color: "white",
-              borderColor: "rgba(255, 255, 255, 0.3)",
-              "&:hover": {
-                borderColor: "white",
-              }
-            }}
-          >
-            <div className="flex flex-row gap-2">
-              <div>
-                <Tv2 />
-              </div>
-              <div>
-                Play with Computer
-              </div>
-            </div>
-          </Button>
-          <Button 
-            variant="outlined"
-            href="/example"
             onClick={resetGame}
             sx={{
               mb: 3,
@@ -119,7 +95,7 @@ export default function Home() {
                 <Tv2 />
               </div>
               <div>
-                Play with Computer (Zustands)
+                Play with Computer
               </div>
             </div>
           </Button>
