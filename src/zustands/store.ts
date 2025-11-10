@@ -8,7 +8,6 @@ const jsonCards = cards as Card[];
 
 type GameStore = {
   players: Player[];
-  // deck: Deck;
   deck: Card[];
   discardPile: Card[];
   turnIndex: number;
@@ -52,7 +51,6 @@ const shuffleCards = (jsonCards: Card[]): Card[] => {
 
 export const useGameStore = create<GameStore>((set, get) => ({
   players: [],
-  // deck: new Deck(jsonCards),
   deck: [...jsonCards],
   discardPile: [],
   turnIndex: 0,
@@ -63,7 +61,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
   showSuitPicker: false,
 
   setPlayers: (players) => set({ players }),
-  // setDeck: (cards) => set({ deck: new Deck(cards) }),
   setDeck: (cards) => set({ deck: cards }),
   setDiscardPile: (cards) => set({ discardPile: cards }),
   setTurnIndex: (index) => set({ turnIndex: index }),
@@ -80,7 +77,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const player: Player = {
       id: "1",
       name: localStorage.getItem("playerName") || "Joker",
-      avatar: localStorage.getItem("playerImg") || "/images/Persona-5-icons/Joker.jpg",
+      avatar: localStorage.getItem("playerImg") || "/Images/Persona-5-icons/Joker.jpg",
       cards: [],
       isBot: false,
     };
@@ -101,23 +98,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
   //Deal cards to players
   dealCards: () => {
     const { deck, players } = get();
-    // deck.shuffle();
 
     let currentDeck = shuffleCards(deck);
-
-    // const shuffleCards = (jsonCards: Card[]): Card[] => {
-    //   const newCards = [...jsonCards];
-    //   for (let i = deck.length - 1; i > 0; i--) {
-    //     const j = Math.floor(Math.random() * (i + 1));
-    //     [deck[i], deck[j]] = [deck[j], deck[i]]
-    //   }
-    //   return newCards;
-    // }
-
-    // const updatedPlayers = players.map(player => ({
-    //   ...player,
-    //   cards: deck.takeCards(8),
-    // }));
 
     const updatedPlayers = players.map(player => {
       const dealtCards = currentDeck.splice(0, 8)
@@ -127,11 +109,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
       }
     })
 
-    // const updatedPlayers = players.forEach(player => {
-    //   player.cards = deck.splice(0,8);
-    // })
-
-    // const topCard = deck.takeCard();
     const topCard = currentDeck.shift();
 
     set({
@@ -162,12 +139,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const reshuffledCards = shuffleCards(cardsToReshuffle);
     const topCard = discardPile[discardPile.length - 1];
 
-    // setDeck(reshuffledCards);
-    // // const newDeck = get().deck;
-    // // newDeck.shuffle();
-
-    // setDiscardPile([topCard]);
-    // setSuit(topCard.suit)
     set({
       deck: reshuffledCards,
       discardPile: [topCard],
@@ -226,7 +197,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
     const currentDeck = get().deck;
 
-    // const drawCard = deck.takeCard();
     const drawCard = currentDeck[0];
     const newDeckCards = currentDeck.splice(1);
     
@@ -243,7 +213,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
       deck: newDeckCards
     })
 
-    // setPlayers(updatedPlayers);
     advanceTurn();
   },
 
