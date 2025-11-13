@@ -93,7 +93,7 @@ A valid play ends your turn unless a special card effect says otherwise.
 
 - Add More players
 - Add card sounds and animations
-- fix mobile view
+- fix problem with disappearing cards whenever a new card is added on mobile devices
 
 ---
 
