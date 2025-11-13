@@ -8,7 +8,7 @@ const jsonCards = cards as Card[];
 
 type GameStore = {
   players: Player[];
-  deck: Card[];
+  deck: Deck;
   discardPile: Card[];
   turnIndex: number;
   suit: Suit | null;
@@ -40,18 +40,9 @@ type GameStore = {
   dealCards: () => void;
 }
 
-const shuffleCards = (jsonCards: Card[]): Card[] => {
-      const newCards = [...jsonCards];
-      for (let i = newCards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newCards[i], newCards[j]] = [newCards[j], newCards[i]]
-      }
-    return newCards;
-}
-
 export const useGameStore = create<GameStore>((set, get) => ({
   players: [],
-  deck: [...jsonCards],
+  deck: new Deck(jsonCards),
   discardPile: [],
   turnIndex: 0,
   suit: null,
@@ -61,7 +52,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   showSuitPicker: false,
 
   setPlayers: (players) => set({ players }),
-  setDeck: (cards) => set({ deck: cards }),
+  setDeck: (cards) => set({ deck: new Deck(cards) }),
   setDiscardPile: (cards) => set({ discardPile: cards }),
   setTurnIndex: (index) => set({ turnIndex: index }),
   setSuit: (suit) => set({ suit }),
@@ -77,7 +68,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const player: Player = {
       id: "1",
       name: localStorage.getItem("playerName") || "Joker",
-      avatar: localStorage.getItem("playerImg") || "/Images/Persona-5-icons/Joker.jpg",
+      avatar: localStorage.getItem("playerImg") || "/images/Persona-5-icons/Joker.jpg",
       cards: [],
       isBot: false,
     };
@@ -98,22 +89,17 @@ export const useGameStore = create<GameStore>((set, get) => ({
   //Deal cards to players
   dealCards: () => {
     const { deck, players } = get();
+    deck.shuffle();
 
-    let currentDeck = shuffleCards(deck);
+    const updatedPlayers = players.map(player => ({
+      ...player,
+      cards: deck.takeCards(8),
+    }));
 
-    const updatedPlayers = players.map(player => {
-      const dealtCards = currentDeck.splice(0, 8)
-      return {
-        ...player,
-        cards: dealtCards
-      }
-    })
-
-    const topCard = currentDeck.shift();
+    const topCard = deck.takeCard();
 
     set({
       players: updatedPlayers,
-      deck: currentDeck,
       discardPile: topCard ? [topCard] : [],
       suit: topCard ? topCard.suit : null,
       turnIndex: 0,
@@ -124,6 +110,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
   //Advance turn
   advanceTurn: () => {
     const { turnIndex, players, setTurnIndex } = get();
+
+    // const nextIndex = (turnIndex + 1) % players.length;
     setTurnIndex((turnIndex + 1) % players.length);
   },
 
@@ -136,14 +124,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
 
     const cardsToReshuffle = discardPile.slice(0, -1);
-    const reshuffledCards = shuffleCards(cardsToReshuffle);
     const topCard = discardPile[discardPile.length - 1];
 
-    set({
-      deck: reshuffledCards,
-      discardPile: [topCard],
-      suit: topCard.suit,
-    })
+    setDeck(cardsToReshuffle);
+    const newDeck = get().deck;
+    newDeck.shuffle();
+
+    setDiscardPile([topCard]);
+    setSuit(topCard.suit)
   },
 
   //handleCardEffect
@@ -188,17 +176,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   //Draw 1
   draw: () => {
     const { players, turnIndex, deck, setPlayers, advanceTurn } = get();
-
-    if (deck.length === 0) {
-      get().repopulateDeck();
-      const { deck: repopulateDeck } = get();
-      if (repopulateDeck.length === 0) return;
-    }
-
-    const currentDeck = get().deck;
-
-    const drawCard = currentDeck[0];
-    const newDeckCards = currentDeck.splice(1);
+    const drawCard = deck.takeCard();
     
     if (!drawCard) return;
 
@@ -208,30 +186,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
             : player
     )
 
-    set({
-      players: updatedPlayers,
-      deck: newDeckCards
-    })
-
+    setPlayers(updatedPlayers);
     advanceTurn();
   },
 
   //Draw 2
   draw2: () => {
     const { players, turnIndex, deck, setPlayers, setTurnIndex } = get();
-
-    if (deck.length < 2) {
-      get().repopulateDeck();
-      const { deck: repopulateDeck } = get();
-      if (repopulateDeck.length < 2) return;
-    }
-
-    const currentDeck = get().deck;
-
-    // const drawnCards: Card[] = deck.takeCards(2);
-    const drawnCards: Card[] = currentDeck.slice(0,2);
-    const newDeckCards = currentDeck.slice(2);
-
+    const drawnCards: Card[] = deck.takeCards(2);
     const nextPlayerIndex = (turnIndex + 1) % players.length;
 
     const updatedPlayers = players.map((player, index) => 
@@ -240,12 +202,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
             : player
     )
 
-    set({
-      players: updatedPlayers,
-      deck: newDeckCards
-    })
-
-    // setPlayers(updatedPlayers);
+    setPlayers(updatedPlayers);
     setTurnIndex((turnIndex + 2) % players.length);
   },
 
@@ -418,7 +375,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   //Reset Game
   resetGame: () => {
-    const freshDeck = shuffleCards(jsonCards);
+    const freshDeck = new Deck(jsonCards);
+    freshDeck.shuffle();
     set({
       deck: freshDeck,
       players: [],
