@@ -110,8 +110,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
   //Advance turn
   advanceTurn: () => {
     const { turnIndex, players, setTurnIndex } = get();
-
-    // const nextIndex = (turnIndex + 1) % players.length;
     setTurnIndex((turnIndex + 1) % players.length);
   },
 
