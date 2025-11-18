@@ -57,7 +57,7 @@ export default function Game() {
                 </div>
             ) : cardsDealt ? (
                     <div className='flex flex-col items-center min-h-screen justify-center bg-[#0f1f3d]'>
-                        <div>
+                        <div className="top-40">
                             <BotHand cards={players[1]?.cards || []} />
                         </div>
                         <div className='flex flex-col mt-3'>

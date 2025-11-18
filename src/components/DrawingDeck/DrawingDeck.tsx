@@ -1,5 +1,3 @@
-import cards from "../../utils/deckofcards.json"
-import Image from "next/image"
 import Card from "../Card/Card"
 import type { Card as CardType } from "../../utils/interface"
 
@@ -26,11 +24,6 @@ export default function DrawingDeck({ deck, onCardClick }: DrawingDeckProps) {
                     <div
                         key={`${card.code}`}
                         className="absolute"
-                        // style={{
-                        //     top: `${index * 3}px`,
-                        //     left: `${index * 3}px`,
-                        //     zIndex: index
-                        // }}
                     >
                         <Card code={card.code} value={card.value} showBack={true} onClick={() => onCardClick(card)} />
                     </div>
